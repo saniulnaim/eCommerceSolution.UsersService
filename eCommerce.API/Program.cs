@@ -22,6 +22,23 @@ builder.Services.AddAutoMapper(typeof(ApplicationUserMappingProfile).Assembly);
 //Fluent Validation
 builder.Services.AddFluentValidationAutoValidation();
 
+//Add API explorer services
+builder.Services.AddEndpointsApiExplorer();
+
+//Add swagger generation services to create swagger specification
+builder.Services.AddSwaggerGen();
+
+//Add cors services
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+  });
+});
+
 // Build the web application
 var app = builder.Build();
 
@@ -29,6 +46,13 @@ app.UseExceptionHandlingMiddleware();
 
 // Routing
 app.UseRouting();
+
+//Adds endpoint that can serve the swagger.json file
+app.UseSwagger();
+//Adds swagger UI (interactive page to expore and test API endpoints)
+app.UseSwaggerUI();
+
+app.UseCors();
 
 // Routing For Controllers
 app.MapControllers();
