@@ -15,7 +15,7 @@ namespace eCommerce.Core.Validators
         .NotEmpty().WithMessage("Password is required.");
 
       RuleFor(x => x.PersonName)
-        .NotEmpty().WithMessage("Person Name is required.")
+        .NotEmpty().WithMessage("Person Name can't be blank.")
         .Length(1, 50).WithMessage("Person name should be 1 to 50 characters long");
 
       RuleFor(x => x.Gender)
