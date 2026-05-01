@@ -31,6 +31,19 @@ builder.Services.AddSingleton<IMapper>(provider =>
     return config.CreateMapper();
 });
 
+// Add Swagger
+builder.Services.AddEndpointsApiExplorer(); // For API exploere services
+builder.Services.AddSwaggerGen();
+
+// Add cors services
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 // Build the web application
 var app = builder.Build();
 
@@ -39,6 +52,12 @@ app.UseExceptionHandlingMiddleware();
 
 // Routing
 app.UseRouting();
+
+// swagger
+app.UseSwagger(); // Add endpoint that can serve the swagger.json
+app.UseSwaggerUI(); // Adds swagger UI
+
+app.UseCors();
 
 // Auth
 app.UseAuthentication();
