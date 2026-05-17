@@ -27,6 +27,7 @@ builder.Services.AddSingleton<IMapper>(provider =>
     var config = new MapperConfiguration(cfg =>
     {
         cfg.AddProfile<ApplicationUserMappingProfile>();
+        cfg.AddProfile<ApplicationUserToUserDTOMappingProfile>();
     }, loggerFactory);
     return config.CreateMapper();
 });
