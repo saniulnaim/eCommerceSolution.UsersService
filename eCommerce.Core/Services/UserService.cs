@@ -20,6 +20,16 @@ namespace eCommerce.Core.Services
             _mapper = mapper;
         }
 
+        public async Task<UserDTO?> GetUserByUserID(Guid? userID)
+        {
+            ApplicationUser? user = await _userRepository.GetUserByUserID(userID);
+            if (user == null)
+            {
+                return null;
+            }
+            return _mapper.Map<UserDTO>(user);
+        }
+
         public async Task<AuthenticationResponse?> Login(LoginRequest loginRequest)
         {
             ApplicationUser? user = await _userRepository.GetUserByEmailAndPassword(loginRequest.Email, loginRequest.Password);
